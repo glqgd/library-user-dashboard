@@ -1,0 +1,157 @@
+import React, { useEffect, useState } from "react";
+import SectionHeading from "../components/SectionHeading";
+import BackButton from "../components/BackButton";
+import { useParams } from "react-router-dom";
+import { Label, TextInput } from "flowbite-react";
+import axios from "axios";
+
+function DetailBuku() {
+  const [bookData, setBookData] = useState({});
+  const { id } = useParams();
+
+  // Fungsi untuk mengambil data buku dari server
+  const fetchBookData = async (id) => {
+    axios
+      .get(`http://localhost:8081/data-buku/${id}`)
+      .then(async (response) => {
+        setBookData(response.data[0]);
+      })
+      .catch((error) => {
+        console.error(error.message);
+      });
+  };
+
+  useEffect(() => {
+    // Memanggil fungsi fetchBookData saat komponen dimuat
+    fetchBookData(id);
+  }, []);
+
+  return (
+    <div className="mx-5 my-5">
+      {/* Judul sektion */}
+      <SectionHeading title={"Detail Buku"}></SectionHeading>
+      <div>
+        <div>
+          {/* Tombol kembali */}
+          <BackButton></BackButton>
+        </div>
+        <div className="mx-5 mt-5 mb-12">
+          <form className="flex flex-col gap-4 mt-6">
+            {/* pengarang */}
+            <div>
+              <div className="block mb-2">
+                <Label htmlFor="pengarang" value="Pengarang" />
+              </div>
+              <TextInput
+                id="pengarang"
+                name="pengarang"
+                type="text"
+                value={bookData.pengarang}
+                disabled
+                color={"black"}
+              />
+            </div>
+
+            {/* judul */}
+            <div>
+              <div className="block mb-2">
+                <Label htmlFor="judul" value="Judul Buku" />
+              </div>
+              <TextInput
+                id="judul"
+                name="judul"
+                type="text"
+                value={bookData.judul}
+                shadow={true}
+                disabled
+                color={"black"}
+              />
+            </div>
+
+            {/* penerbit */}
+            <div>
+              <div className="block mb-2">
+                <Label htmlFor="penerbit" value="Penerbit" />
+              </div>
+              <TextInput
+                id="penerbit"
+                name="penerbit"
+                type="text"
+                value={bookData.penerbit}
+                shadow={true}
+                disabled
+                color={"black"}
+              />
+            </div>
+
+            {/* tahun terbit */}
+            <div>
+              <div className="block mb-2">
+                <Label htmlFor="tahun_terbit" value="Tahun Terbit" />
+              </div>
+              <TextInput
+                id="tahun_terbit"
+                name="tahun_terbit"
+                type="number"
+                value={bookData.tahun_terbit}
+                shadow={true}
+                disabled
+                color={"black"}
+              />
+            </div>
+
+            {/*  sumber */}
+            <div>
+              <div className="block mb-2">
+                <Label htmlFor="sumber" value="Sumber Buku" />
+              </div>
+              <TextInput
+                id="sumber"
+                name="sumber"
+                type="text"
+                value={bookData.sumber}
+                shadow={true}
+                disabled
+                color={"black"}
+              />
+            </div>
+
+            {/* kode rak */}
+            <div>
+              <div className="block mb-2">
+                <Label htmlFor="kode_rak" value="Kode Rak" />
+              </div>
+              <TextInput
+                id="kode_rak"
+                name="kode_rak"
+                type="text"
+                value={bookData.kode_rak}
+                shadow={true}
+                disabled
+                color={"black"}
+              />
+            </div>
+
+            {/* kode barcode */}
+            <div>
+              <div className="block mb-2">
+                <Label htmlFor="kode_barcode" value="Kode Barcode" />
+              </div>
+              <TextInput
+                id="kode_barcode"
+                name="kode_barcode"
+                type="text"
+                value={bookData.kode_barcode}
+                shadow={true}
+                disabled
+                color={"black"}
+              />
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default DetailBuku;
