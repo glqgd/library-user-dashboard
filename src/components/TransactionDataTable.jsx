@@ -11,14 +11,15 @@ function TransactionDataTable({ transactions, tipeData }) {
 
   const transactionFiltered = transactions.filter((data) => {
     return (
-      data.id_user === userData.id &&
-      ((tipeData === "peminjaman" && data.status !== null) ||
-        (tipeData === "pengembalian" && data.status === "Selesai"))
+      (data.id_user === userData.id &&
+        ((tipeData === "peminjaman" && data.status !== null) ||
+          (tipeData === "pengembalian" && data.status === "Selesai"))) ||
+      (tipeData === "denda" && data.denda === 1)
     );
   });
 
   const totalPages = Math.ceil(transactionFiltered.length / perPage);
-
+  console.log(transactionFiltered);
   return (
     <div>
       <div className="mx-5 my-5">

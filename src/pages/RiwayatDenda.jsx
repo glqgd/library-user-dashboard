@@ -116,8 +116,10 @@ function RiwayatDenda() {
       const filteredData = transactions.filter((item) => {
         const tenggatKembaliDate = new Date(item.tenggat_kembali);
         const today = new Date();
-        return tenggatKembaliDate <= today && item.status === "Dipinjam";
+        return tenggatKembaliDate <= today && item.status === "Selesai";
       });
+
+      // console.log(filteredData);
 
       const transaksiDendaResponse = await axios.get(
         "http://localhost:8081/buku-dipinjam"
