@@ -2,7 +2,7 @@ import { Table, Pagination } from "flowbite-react";
 import React, { useState } from "react";
 import DetailButton from "./DetailButton";
 
-function BookDataTable({ books }) {
+function AllBookTable({ books }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage] = useState(10);
 
@@ -33,21 +33,21 @@ function BookDataTable({ books }) {
                     className="font-medium text-gray-900 dark:text-white"
                     colSpan={2}
                   >
-                    {book[0].judul}
+                    {book.judul}
                   </Table.Cell>
-                  <Table.Cell>{book[0].pengarang}</Table.Cell>
-                  <Table.Cell>{book[0].penerbit}</Table.Cell>
-                  <Table.Cell>{book[0].tahun_terbit}</Table.Cell>
+                  <Table.Cell>{book.pengarang}</Table.Cell>
+                  <Table.Cell>{book.penerbit}</Table.Cell>
+                  <Table.Cell>{book.tahun_terbit}</Table.Cell>
                   <Table.Cell>
-                    {book[0].kode_barcode}
+                    {book.kode_barcode}
                     {/* <Barcode value={book.kode_barcode} /> */}
                   </Table.Cell>
                   <Table.Cell>
-                    {console.log(book[0].tersedia)}
-                    {book[0].tersedia === 1 ? "tersedia" : "tidak tersedia"}
+                    {console.log(book.tersedia)}
+                    {book.tersedia === 1 ? "tersedia" : "tidak tersedia"}
                   </Table.Cell>
                   <Table.Cell className="grid grid-cols-1 gap-1">
-                    <DetailButton book={book[0]}>Remove</DetailButton>
+                    <DetailButton book={book}>Remove</DetailButton>
                   </Table.Cell>
                 </Table.Row>
               ))}
@@ -83,4 +83,4 @@ function BookDataTable({ books }) {
   );
 }
 
-export default BookDataTable;
+export default AllBookTable;

@@ -3,6 +3,7 @@ import SearchBar from "../components/SearchBar";
 import SectionHeading from "../components/SectionHeading";
 import BookDataTable from "../components/BookDataTable";
 import axios from "axios";
+import AllBookTable from "../components/AllBookTable";
 
 function Dashboard() {
   const storedData = localStorage.getItem("userData");
@@ -56,7 +57,7 @@ function Dashboard() {
         </div>
 
         {/* Tabel untuk menampilkan daftar buku */}
-        <BookDataTable books={books} />
+        <AllBookTable books={books} />
       </div>
     </div>
   );

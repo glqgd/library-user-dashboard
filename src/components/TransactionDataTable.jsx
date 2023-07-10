@@ -1,6 +1,5 @@
 import { Table, Pagination } from "flowbite-react";
 import React, { useState } from "react";
-import DetailButton from "./DetailButton";
 import TransactionDetailButton from "./TransactionDetailButton";
 
 function TransactionDataTable({ transactions, tipeData }) {
@@ -14,8 +13,7 @@ function TransactionDataTable({ transactions, tipeData }) {
     return (
       data.id_user === userData.id &&
       ((tipeData === "peminjaman" && data.status !== null) ||
-        (tipeData === "pengembalian" && data.status === "Selesai") ||
-        (tipeData === "denda" && data.tanggal_kembali > data.tenggat_kembali))
+        (tipeData === "pengembalian" && data.status === "Selesai"))
     );
   });
 

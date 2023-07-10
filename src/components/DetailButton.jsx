@@ -10,7 +10,7 @@ function DetailButton({ book }) {
       <Button
         size={"xs"}
         onClick={() => {
-          navigate(`/detail-buku/${book.kode_barcode}`);
+          navigate(`/dashboard/detail-buku/${book.kode_barcode}`);
         }}
       >
         Detail

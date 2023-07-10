@@ -15,30 +15,92 @@ function RiwayatDenda() {
   // Fungsi untuk mengambil data buku dari server menggunakan API
   const fetchBooks = async () => {
     try {
-      const response = await axios.get("http://localhost:8081/denda-buku");
-      const bookFiltered = response.data.filter((data) => {
-        return data.id_peminjam === userData.id;
+      const response = await axios.get("http://localhost:8081/transaction");
+      const transactions = response.data;
+
+      const filteredData = transactions.filter((item) => {
+        const tenggatKembaliDate = new Date(item.tenggat_kembali);
+        const today = new Date();
+        return tenggatKembaliDate <= today && item.status === "Dipinjam";
       });
 
-      // Membuat array untuk menyimpan promises untuk mengambil detail buku
-      const bookDetailPromises = bookFiltered.map((book) => {
-        return axios.get(
-          `http://localhost:8081/data-buku/${book.kode_barcode}`
-        );
-      });
-
-      // Mengambil detail buku secara asynchronous
-      const bookDetailResponses = await Promise.all(bookDetailPromises);
-
-      // Mengambil data buku dari respons
-      const bookDetails = bookDetailResponses.map(
-        (response) => response.data[0]
+      const transaksiDendaResponse = await axios.get(
+        "http://localhost:8081/buku-dipinjam"
       );
+      const transaksiDenda = transaksiDendaResponse.data.filter((item) => {
+        return item.hilang === 1;
+      });
 
-      console.log(bookDetails);
+      const combinedData = [
+        ...new Set([
+          ...filteredData.map((transaction) => transaction.id_transaksi),
+          ...transaksiDenda.map((transaksi) => transaksi.id_transaksi),
+        ]),
+      ];
 
-      setBooks(bookFiltered);
-      setBooksData(bookDetails);
+      const combinedDataResponse = [];
+
+      for (const transactionID of combinedData) {
+        const fetchResponse = await axios.get(
+          `http://localhost:8081/fetch-transaction/${transactionID}`
+        );
+        const fetchedData = fetchResponse.data;
+
+        combinedDataResponse.push(fetchedData);
+      }
+
+      const userIds = combinedDataResponse.map(
+        (transaction) => transaction.id_user
+      );
+      const usersResponse = await axios.get(
+        `http://localhost:8081/users?userIds=${userIds.join(",")}`
+      );
+      const usersMap = usersResponse.data.reduce((map, user) => {
+        map[user.id] = user.nama;
+        return map;
+      }, {});
+
+      const transactionData = combinedDataResponse.map((transaction) => ({
+        ...transaction,
+        peminjam: usersMap[transaction.id_user],
+      }));
+
+      const separatedKodeBarcodeArray = [
+        ...new Set(
+          transactionData
+            .map((transaction) => transaction.kode_barcode)
+            .flatMap((kodeBarcode) => kodeBarcode.split(","))
+        ),
+      ];
+
+      const dataBuku = [];
+
+      for (const buku of separatedKodeBarcodeArray) {
+        const bukuResponse = await axios.get(
+          `http://localhost:8081/data-buku/${buku}`
+        );
+        const bukuData = bukuResponse.data;
+
+        dataBuku.push(bukuData);
+      }
+
+      const userIdBook = dataBuku.map((buku) => parseInt(buku[0].peminjam));
+      const usersRes = await axios.get(
+        `http://localhost:8081/users?userIds=${userIdBook.join(",")}`
+      );
+      const usersMaps = usersRes.data.reduce((map, user) => {
+        map[user.id] = { id: user.id, nama: user.nama }; // Include both id and nama
+        return map;
+      }, {});
+
+      const BukuData = dataBuku.map((buku) => ({
+        ...buku,
+        peminjam: usersMaps[buku[0].peminjam],
+      }));
+
+      console.log(BukuData);
+      setBooks(BukuData);
+      setBooksData(BukuData);
     } catch (error) {
       console.error("Error fetching books:", error);
     }
@@ -47,8 +109,42 @@ function RiwayatDenda() {
   // Fungsi untuk mengambil data transaksi dari server menggunakan API
   const fetchTransaction = async () => {
     try {
-      const response = await axios.get(`http://localhost:8081/transaction`);
-      setTransaction(response.data);
+      // const response = await axios.get(`http://localhost:8081/transaction`);
+      const response = await axios.get("http://localhost:8081/transaction");
+      const transactions = response.data;
+
+      const filteredData = transactions.filter((item) => {
+        const tenggatKembaliDate = new Date(item.tenggat_kembali);
+        const today = new Date();
+        return tenggatKembaliDate <= today && item.status === "Dipinjam";
+      });
+
+      const transaksiDendaResponse = await axios.get(
+        "http://localhost:8081/buku-dipinjam"
+      );
+      const transaksiDenda = transaksiDendaResponse.data.filter((item) => {
+        return item.hilang === 1;
+      });
+
+      const combinedData = [
+        ...new Set([
+          ...filteredData.map((transaction) => transaction.id_transaksi),
+          ...transaksiDenda.map((transaksi) => transaksi.id_transaksi),
+        ]),
+      ];
+
+      const combinedDataResponse = [];
+
+      for (const transactionID of combinedData) {
+        const fetchResponse = await axios.get(
+          `http://localhost:8081/fetch-transaction/${transactionID}`
+        );
+        const fetchedData = fetchResponse.data;
+
+        combinedDataResponse.push(fetchedData);
+      }
+      console.log(combinedDataResponse);
+      setTransaction(combinedDataResponse);
     } catch (error) {
       console.error("Error fetching books:", error);
     }
@@ -57,7 +153,7 @@ function RiwayatDenda() {
   useEffect(() => {
     fetchTransaction();
     fetchBooks();
-    console.log(books);
+    // console.log(books);
   }, []);
 
   return (

@@ -10,7 +10,7 @@ function TransactionDetailButton({ transaction }) {
       <Button
         size={"xs"}
         onClick={() => {
-          navigate(`/detail-transaksi/${transaction.id_transaksi}`);
+          navigate(`/dashboard/detail-transaksi/${transaction.id_transaksi}`);
         }}
       >
         Detail
