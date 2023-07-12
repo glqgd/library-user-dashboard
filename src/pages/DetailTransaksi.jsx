@@ -13,14 +13,14 @@ function DetailTransaksi() {
   // Fungsi untuk mengambil data transaksi dari server
   const fetchTransactionData = async (id) => {
     axios
-      .get(`http://localhost:8081/fetch-transaction/${id}`)
+      .get(`https://server.libraryselfservice.site/fetch-transaction/${id}`)
       .then(async (response) => {
         setTransactionData(response.data);
         const barcodePromises = response.data.kode_barcode
           .split(",")
           .map(async (barcode) => {
             const bookResponse = await axios.get(
-              `http://localhost:8081/data-buku/${barcode}`
+              `https://server.libraryselfservice.site/data-buku/${barcode}`
             );
             if (
               bookResponse &&

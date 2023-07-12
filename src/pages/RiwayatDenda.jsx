@@ -15,7 +15,9 @@ function RiwayatDenda() {
   // Fungsi untuk mengambil data buku dari server menggunakan API
   const fetchBooks = async () => {
     try {
-      const response = await axios.get("http://localhost:8081/transaction");
+      const response = await axios.get(
+        "https://server.libraryselfservice.site/transaction"
+      );
       const transactions = response.data;
 
       const filteredData = transactions.filter((item) => {
@@ -25,7 +27,7 @@ function RiwayatDenda() {
       });
 
       const transaksiDendaResponse = await axios.get(
-        "http://localhost:8081/buku-dipinjam"
+        "https://server.libraryselfservice.site/buku-dipinjam"
       );
       const transaksiDenda = transaksiDendaResponse.data.filter((item) => {
         return item.hilang === 1;
@@ -42,7 +44,7 @@ function RiwayatDenda() {
 
       for (const transactionID of combinedData) {
         const fetchResponse = await axios.get(
-          `http://localhost:8081/fetch-transaction/${transactionID}`
+          `https://server.libraryselfservice.site/fetch-transaction/${transactionID}`
         );
         const fetchedData = fetchResponse.data;
 
@@ -53,7 +55,9 @@ function RiwayatDenda() {
         (transaction) => transaction.id_user
       );
       const usersResponse = await axios.get(
-        `http://localhost:8081/users?userIds=${userIds.join(",")}`
+        `https://server.libraryselfservice.site/users?userIds=${userIds.join(
+          ","
+        )}`
       );
       const usersMap = usersResponse.data.reduce((map, user) => {
         map[user.id] = user.nama;
@@ -77,7 +81,7 @@ function RiwayatDenda() {
 
       for (const buku of separatedKodeBarcodeArray) {
         const bukuResponse = await axios.get(
-          `http://localhost:8081/data-buku/${buku}`
+          `https://server.libraryselfservice.site/data-buku/${buku}`
         );
         const bukuData = bukuResponse.data;
 
@@ -86,7 +90,9 @@ function RiwayatDenda() {
 
       const userIdBook = dataBuku.map((buku) => parseInt(buku[0].peminjam));
       const usersRes = await axios.get(
-        `http://localhost:8081/users?userIds=${userIdBook.join(",")}`
+        `https://server.libraryselfservice.site/users?userIds=${userIdBook.join(
+          ","
+        )}`
       );
       const usersMaps = usersRes.data.reduce((map, user) => {
         map[user.id] = { id: user.id, nama: user.nama }; // Include both id and nama
@@ -109,8 +115,10 @@ function RiwayatDenda() {
   // Fungsi untuk mengambil data transaksi dari server menggunakan API
   const fetchTransaction = async () => {
     try {
-      // const response = await axios.get(`http://localhost:8081/transaction`);
-      const response = await axios.get("http://localhost:8081/transaction");
+      // const response = await axios.get(`https://server.libraryselfservice.site/transaction`);
+      const response = await axios.get(
+        "https://server.libraryselfservice.site/transaction"
+      );
       const transactions = response.data;
 
       const filteredData = transactions.filter((item) => {
@@ -122,7 +130,7 @@ function RiwayatDenda() {
       // console.log(filteredData);
 
       const transaksiDendaResponse = await axios.get(
-        "http://localhost:8081/buku-dipinjam"
+        "https://server.libraryselfservice.site/buku-dipinjam"
       );
       const transaksiDenda = transaksiDendaResponse.data.filter((item) => {
         return item.hilang === 1;

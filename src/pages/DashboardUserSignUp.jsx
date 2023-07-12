@@ -55,7 +55,7 @@ function DashboardUserSignUp() {
     ) {
       // Mengirim permintaan POST ke server menggunakan Axios
       axios
-        .post("http://localhost:8081/signup", values)
+        .post("https://server.libraryselfservice.site/signup", values)
         .then((res) => {
           // Jika pendaftaran berhasil, menampilkan modal dengan pesan sukses
           setShowModal(true);

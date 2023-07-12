@@ -12,7 +12,7 @@ function DetailBuku() {
   // Fungsi untuk mengambil data buku dari server
   const fetchBookData = async (id) => {
     axios
-      .get(`http://localhost:8081/data-buku/${id}`)
+      .get(`https://server.libraryselfservice.site/data-buku/${id}`)
       .then(async (response) => {
         setBookData(response.data[0]);
       })

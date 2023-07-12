@@ -14,7 +14,9 @@ function Dashboard() {
   // Mengambil daftar buku dari backend
   const fetchBooks = async () => {
     try {
-      const response = await axios.get(`http://localhost:8081/books`);
+      const response = await axios.get(
+        `https://server.libraryselfservice.site/books`
+      );
       setBooks(response.data);
       setBooksData(response.data);
     } catch (error) {

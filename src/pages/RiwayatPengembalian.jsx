@@ -11,7 +11,9 @@ function RiwayatPengembalian() {
   // Fungsi untuk mengambil data transaksi dari server menggunakan API
   const fetchBooks = async () => {
     try {
-      const response = await axios.get(`http://localhost:8081/transaction`);
+      const response = await axios.get(
+        `https://server.libraryselfservice.site/transaction`
+      );
       setTransaction(response.data);
     } catch (error) {
       console.error("Error fetching books:", error);
