@@ -9,7 +9,7 @@ function AllBookTable({ books }) {
   const totalPages = Math.ceil(books.length / perPage);
 
   return (
-    <div>
+    <div className="h-fit">
       <div className="mx-5 my-5">
         <Table hoverable={true} className="table-fixed">
           <Table.Head>
@@ -18,6 +18,7 @@ function AllBookTable({ books }) {
             <Table.HeadCell>Penerbit</Table.HeadCell>
             <Table.HeadCell>Tahun Terbit</Table.HeadCell>
             <Table.HeadCell>Kode Barcode</Table.HeadCell>
+            <Table.HeadCell>Kode Rak</Table.HeadCell>
             <Table.HeadCell>Status</Table.HeadCell>
             <Table.HeadCell>Action</Table.HeadCell>
           </Table.Head>
@@ -42,6 +43,7 @@ function AllBookTable({ books }) {
                     {book.kode_barcode}
                     {/* <Barcode value={book.kode_barcode} /> */}
                   </Table.Cell>
+                  <Table.Cell>{book.kode_rak}</Table.Cell>
                   <Table.Cell>
                     {console.log(book.tersedia)}
                     {book.tersedia === 1 ? "tersedia" : "tidak tersedia"}

@@ -40,22 +40,8 @@ function ProtectedRoute({ children }) {
 function App() {
   return (
     <Routes>
-      <Route
-        path="/"
-        element={
-          <ProtectedRoute>
-            <DashboardUserLogin />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/dashboard-signup"
-        element={
-          <ProtectedRoute>
-            <DashboardUserSignUp />
-          </ProtectedRoute>
-        }
-      />
+      <Route path="/" element={<DashboardUserLogin />} />
+      <Route path="/dashboard-signup" element={<DashboardUserSignUp />} />
       <Route
         path="/dashboard/*"
         element={
