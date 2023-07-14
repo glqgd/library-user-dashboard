@@ -9,7 +9,7 @@ function AllBookTable({ books }) {
   const totalPages = Math.ceil(books.length / perPage);
 
   return (
-    <div className="h-fit">
+    <div>
       <div className="mx-5 my-5">
         <Table hoverable={true} className="table-fixed">
           <Table.Head>
