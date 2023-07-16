@@ -31,6 +31,10 @@ function Dashboard() {
   useEffect(() => {
     // Memanggil fungsi fetchBooks saat komponen dimount
     fetchBooks();
+    if (!localStorage.getItem("firstRender")) {
+      localStorage.setItem("firstRender", "true");
+      window.location.reload();
+    }
   }, []);
 
   return (

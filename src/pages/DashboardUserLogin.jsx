@@ -43,7 +43,7 @@ function DashboardUserLogin() {
               icon: "mx-auto mb-4 h-14 w-14 text-red-600",
             });
             closeModal.addEventListener("click", function () {
-              navigate("/dashboard-login");
+              navigate("/");
             });
           } else {
             if (res.data.length > 0) {
@@ -75,7 +75,7 @@ function DashboardUserLogin() {
                 icon: "mx-auto mb-4 h-14 w-14 text-red-600",
               });
               closeModal.addEventListener("click", function () {
-                navigate("/dashboard-login");
+                navigate("/");
               });
             }
           }
@@ -89,7 +89,7 @@ function DashboardUserLogin() {
             icon: "mx-auto mb-4 h-14 w-14 text-red-600",
           });
           closeModal.addEventListener("click", function () {
-            navigate("/dashboard-login");
+            navigate("/");
           });
         });
     }

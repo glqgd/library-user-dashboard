@@ -7,6 +7,7 @@ function LogOutButton() {
 
   const handleLogout = () => {
     localStorage.removeItem("userData");
+    localStorage.removeItem("firstRender");
     navigate("/");
   };
 
