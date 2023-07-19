@@ -6,36 +6,36 @@ function Validation(values) {
   const password_pattern = /^.{8,}$/;
 
   if (values.name === "") {
-    error.name = "Name should not be empty";
+    error.name = "Nama tidak boleh kosong";
   } else {
     error.name = "";
   }
   if (values.email === "") {
-    error.email = "Name should not be empty";
+    error.email = "Email tidak boleh kosong";
   } else if (!email_pattern.test(values.email)) {
-    error.email = "Email Didn't match";
+    error.email = "Email tidak sesuai";
   } else {
     error.email = "";
   }
   if (values.password === "") {
-    error.password = "Password should not be empty";
+    error.password = "Password tidak boleh kosong";
   } else if (!password_pattern.test(values.password)) {
-    error.password = "Password didn't correct";
+    error.password = "Password salah";
   } else {
     error.password = "";
   }
   if (values.instansi === "") {
-    error.instansi = "instansi should not be empty";
+    error.instansi = "Instansi tidak boleh kosong";
   } else {
     error.instansi = "";
   }
   if (values.tgl_lahir === "") {
-    error.tgl_lahir = "tgl_lahir should not be empty";
+    error.tgl_lahir = "Tanggal lahir tidak boleh kosong";
   } else {
     error.tgl_lahir = "";
   }
   if (values.tempat_lahir === "") {
-    error.tempat_lahir = "tempat_lahir should not be empty";
+    error.tempat_lahir = "Tempat lahir tidak boleh kosong";
   } else {
     error.tempat_lahir = "";
   }

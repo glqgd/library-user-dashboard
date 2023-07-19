@@ -8,7 +8,7 @@ import { MdOutlineCheckCircleOutline } from "react-icons/md";
 import Validation from "../Validation/SignUpValidation";
 
 function DashboardUserSignUp() {
-  // Menggunakan useState untuk menginisialisasi state
+  // State untuk menyimpan nilai input pengguna
   const [values, setValues] = useState({
     name: "",
     email: "",
@@ -17,25 +17,34 @@ function DashboardUserSignUp() {
     tempat_lahir: "",
     tgl_lahir: "",
   });
+
+  // Hook useNavigate dari react-router-dom untuk navigasi halaman
   const navigate = useNavigate();
+
+  // State untuk menyimpan error yang terkait dengan validasi input
   const [errors, setErrors] = useState({});
+
+  // State untuk menampilkan atau menyembunyikan modal
   const [showModal, setShowModal] = useState(false);
 
+  // Fungsi untuk menghandle perubahan input
   const handleInput = (event) => {
-    // Mengupdate nilai state berdasarkan input pengguna
     setValues((prev) => ({
       ...prev,
       [event.target.name]: event.target.value,
     }));
   };
 
+  // Fungsi untuk menutup modal
   const closeModal = () => {
-    // Menutup modal
     setShowModal(false);
   };
 
+  // Fungsi untuk menghandle submit form
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    // Validasi input menggunakan fungsi Validation
     const err = Validation({
       name: values.name.trim(),
       email: values.email.trim(),
@@ -44,7 +53,11 @@ function DashboardUserSignUp() {
       tempat_lahir: values.tempat_lahir.trim(),
       tgl_lahir: values.tgl_lahir.trim(),
     });
+
+    // Set error state dengan hasil validasi
     setErrors(err);
+
+    // Jika tidak ada error, kirim data ke server menggunakan axios
     if (
       err.name === "" &&
       err.email === "" &&
@@ -53,17 +66,21 @@ function DashboardUserSignUp() {
       err.tempat_lahir === "" &&
       err.tgl_lahir === ""
     ) {
-      // Mengirim permintaan POST ke server menggunakan Axios
       axios
         .post("https://server.libraryselfservice.site/signup", values)
         .then((res) => {
-          // Jika pendaftaran berhasil, menampilkan modal dengan pesan sukses
+          // Jika berhasil, tampilkan modal
           setShowModal(true);
+
+          // Set event listener untuk menutup modal dan navigasi ke halaman beranda setelah modal ditutup
+          const closeModal = document.getElementById("closeModal");
+          closeModal.addEventListener("click", function () {
+            navigate("/");
+          });
         })
         .catch((error) => {
           if (error.response) {
             const errorMessage = error.response.data.error;
-            // Jika terjadi kesalahan, menampilkan pesan kesalahan pada state errors
             setErrors({ ...err, email: errorMessage });
             setShowModal(true);
           } else {
@@ -74,38 +91,31 @@ function DashboardUserSignUp() {
   };
 
   return (
-    <div className="flex h-full sm:h-screen w-full bg-blue-800 py-8 sm:py-0">
-      {/* Tampilan pendaftaran pengguna */}
+    <div className="flex min-h-screen w-full bg-blue-800 py-5">
       <div className="m-auto w-full flex justify-center">
         <div className="w-full flex justify-center">
-          {/* Modal untuk menampilkan pesan sukses */}
           <Modal show={showModal} size="md" popup={true} onClose={closeModal}>
-            {/* Konten modal */}
             <Modal.Header />
             <Modal.Body>
               <div className="text-center">
-                {/* Tampilan ikon sukses atau pesan kesalahan */}
                 <MdOutlineCheckCircleOutline className="mx-auto mb-4 h-14 w-14 text-green-500" />
+
+                {/* Tampilkan pesan error jika ada, atau pesan sukses jika tidak */}
                 {errors.email ? (
-                  // Jika ada kesalahan validasi, menampilkan pesan kesalahan
                   <h3 className="mb-5 text-lg font-normal text-red-600">
                     {errors.email}
                   </h3>
                 ) : (
-                  // Jika pendaftaran berhasil, menampilkan pesan sukses
                   <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
                     Sign Up Success
                   </h3>
                 )}
+
                 <div className="flex justify-center gap-4">
-                  {/* Tombol OK untuk menutup modal */}
                   <Button
                     id="closeModal"
                     color="blue"
-                    onClick={() => {
-                      setShowModal(false);
-                      navigate("/dashboard-login");
-                    }}
+                    onClick={() => setShowModal(false)}
                   >
                     Ok
                   </Button>
@@ -113,12 +123,10 @@ function DashboardUserSignUp() {
               </div>
             </Modal.Body>
           </Modal>
-          {/* Formulir pendaftaran */}
-          <Card className="w-5/6 sm:w-3/6 px-2 sm:px-5 py-3">
+          <Card className="w-3/6 px-5 py-3">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center">
               Pendaftaran Anggota Perpustakaan
             </h1>
-            {/* Tampilan ikon pengguna */}
             <div className="text-center flex justify-center flex-col items-center">
               <IoPersonCircle
                 size="8rem"
@@ -126,117 +134,139 @@ function DashboardUserSignUp() {
               ></IoPersonCircle>
             </div>
             <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-              {/* Input nama */}
-              <div className="sm:flex">
+              <div className="flex">
                 <div className="w-1/4">
                   <Label htmlFor="name" value="Nama" />
                 </div>
-                <TextInput
-                  type="name"
-                  id="name"
-                  placeholder="Masukkan nama"
-                  name="name"
-                  onChange={handleInput}
-                  className="sm:w-3/4"
-                />
-                {errors.name && (
-                  // Menampilkan pesan kesalahan untuk input nama
-                  <span className="text-red-600"> {errors.name}</span>
-                )}
+                <div className="row w-3/4">
+                  <TextInput
+                    type="name"
+                    id="name"
+                    placeholder="Masukkan nama"
+                    name="name"
+                    onChange={handleInput}
+                    className="w-full"
+                  />
+                  {errors.name && (
+                    <span className="text-red-600 text-xs"> {errors.name}</span>
+                  )}
+                </div>
               </div>
-              {/* Input tempat dan tanggal lahir */}
-              <div className="sm:flex">
-                <div className="sm:w-1/4">
+
+              {/* Bagian input untuk tempat lahir dan tanggal lahir */}
+              <div className="flex">
+                <div className="w-1/4">
                   <Label htmlFor="tempat_lahir" value="Tempat Tanggal Lahir" />
                 </div>
-                <div className="sm:flex sm:w-3/4 gap-4">
-                  <TextInput
-                    type="text"
-                    id="tempat_lahir"
-                    placeholder="Masukkan Tempat Lahir"
-                    name="tempat_lahir"
-                    onChange={handleInput}
-                    className="sm:w-1/2 my-2"
-                  />
-                  {errors.tempat_lahir && (
-                    // Menampilkan pesan kesalahan untuk input tempat lahir
-                    <span className="text-red-600"> {errors.tempat_lahir}</span>
-                  )}
-                  <TextInput
-                    type="date"
-                    id="tgl_lahir"
-                    name="tgl_lahir"
-                    onChange={handleInput}
-                    className="sm:w-1/2"
-                  />
-                  {errors.tgl_lahir && (
-                    // Menampilkan pesan kesalahan untuk input tanggal lahir
-                    <span className="text-red-600"> {errors.tgl_lahir}</span>
-                  )}
+                <div className="flex w-3/4 gap-4">
+                  <div className="w-1/2 row">
+                    <TextInput
+                      type="text"
+                      id="tempat_lahir"
+                      placeholder="Masukkan Tempat Lahir"
+                      name="tempat_lahir"
+                      onChange={handleInput}
+                      className="w-full"
+                    />
+                    {errors.tempat_lahir && (
+                      <span className="text-red-600 text-xs">
+                        {" "}
+                        {errors.tempat_lahir}
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="w-1/2 row">
+                    <TextInput
+                      type="date"
+                      id="tgl_lahir"
+                      name="tgl_lahir"
+                      onChange={handleInput}
+                      className="w-full"
+                    />
+                    {errors.tgl_lahir && (
+                      <span className="text-red-600 text-xs">
+                        {" "}
+                        {errors.tgl_lahir}
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
-              {/* Input instansi */}
-              <div className="sm:flex">
-                <div className="sm:w-1/4">
+
+              <div className="flex">
+                <div className="w-1/4">
                   <Label htmlFor="instansi" value="Instansi" />
                 </div>
-                <TextInput
-                  type="text"
-                  id="instansi"
-                  placeholder="Masukkan Asal Instansi"
-                  name="instansi"
-                  onChange={handleInput}
-                  className="sm:w-3/4"
-                />
-                {errors.instansi && (
-                  // Menampilkan pesan kesalahan untuk input instansi
-                  <span className="text-red-600"> {errors.instansi}</span>
-                )}
+                <div className="w-3/4">
+                  <TextInput
+                    type="text"
+                    id="instansi"
+                    placeholder="Masukkan Asal Instansi"
+                    name="instansi"
+                    onChange={handleInput}
+                    className="w-full "
+                  />
+                  {errors.instansi && (
+                    <span className="text-red-600 text-xs">
+                      {" "}
+                      {errors.instansi}
+                    </span>
+                  )}
+                </div>
               </div>
-              {/* Input email */}
-              <div className="sm:flex">
-                <div className="sm:w-1/4">
+
+              <div className="flex">
+                <div className="w-1/4">
                   <Label htmlFor="email" value="Email" />
                 </div>
-                <TextInput
-                  type="email"
-                  id="email"
-                  placeholder="Masukkan Email"
-                  name="email"
-                  onChange={handleInput}
-                  className="sm:w-3/4"
-                />
-                {errors.email && (
-                  // Menampilkan pesan kesalahan untuk input email
-                  <span className="text-red-600"> {errors.email}</span>
-                )}
+                <div className="w-3/4">
+                  <TextInput
+                    type="email"
+                    id="email"
+                    placeholder="Masukkan Email"
+                    name="email"
+                    onChange={handleInput}
+                    className="w-full"
+                  />
+                  {errors.email && (
+                    <span className="text-red-600 text-xs">
+                      {" "}
+                      {errors.email}
+                    </span>
+                  )}
+                </div>
               </div>
-              {/* Input password */}
-              <div className="sm:flex">
-                <div className="sm:w-1/4">
+
+              <div className="flex">
+                <div className="w-1/4">
                   <Label htmlFor="password" value="Password" />
                 </div>
-                <TextInput
-                  id="password"
-                  type="password"
-                  placeholder="Enter Password"
-                  name="password"
-                  onChange={handleInput}
-                  className="sm:w-3/4"
-                />
-                {errors.password && (
-                  // Menampilkan pesan kesalahan untuk input password
-                  <span className="text-red-600"> {errors.password}</span>
-                )}
+                <div className="w-3/4">
+                  <TextInput
+                    id="password"
+                    type="password"
+                    placeholder="Enter Password"
+                    name="password"
+                    onChange={handleInput}
+                    className="w-full"
+                  />
+                  {errors.password && (
+                    <span className="text-red-600 text-xs">
+                      {" "}
+                      {errors.password}
+                    </span>
+                  )}
+                </div>
               </div>
-              {/* Tombol submit untuk mengirim formulir */}
+
               <Button type="submit">Konfirmasi Pendaftaran</Button>
+
               <div className="text-center">
                 <span className="text-sm text-gray-500 dark:text-gray-400">
                   Jika anda sudah memiliki akun silakan
                 </span>
-                {/* Tautan untuk menuju halaman login */}
-                <Link to="/dashboard-login">
+                <Link to="/">
                   <span className="text-sm font-bold"> Masuk</span>
                 </Link>
               </div>
