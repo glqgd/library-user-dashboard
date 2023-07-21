@@ -20,7 +20,7 @@ function AllBookTable({ books }) {
             <Table.HeadCell>Kode Barcode</Table.HeadCell>
             <Table.HeadCell>Kode Rak</Table.HeadCell>
             <Table.HeadCell>Status</Table.HeadCell>
-            <Table.HeadCell>Action</Table.HeadCell>
+            {/* <Table.HeadCell>Action</Table.HeadCell> */}
           </Table.Head>
           <Table.Body className="divide-y">
             {books
@@ -48,9 +48,9 @@ function AllBookTable({ books }) {
                     {console.log(book.tersedia)}
                     {book.tersedia === 1 ? "tersedia" : "tidak tersedia"}
                   </Table.Cell>
-                  <Table.Cell className="grid grid-cols-1 gap-1">
-                    <DetailButton book={book}>Remove</DetailButton>
-                  </Table.Cell>
+                  {/* <Table.Cell className="grid grid-cols-1 gap-1">
+                    <DetailButton book={book}></DetailButton>
+                  </Table.Cell> */}
                 </Table.Row>
               ))}
           </Table.Body>

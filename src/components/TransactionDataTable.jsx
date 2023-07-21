@@ -14,7 +14,7 @@ function TransactionDataTable({ transactions, tipeData }) {
       (data.id_user === userData.id &&
         ((tipeData === "peminjaman" && data.status !== null) ||
           (tipeData === "pengembalian" && data.status === "Selesai"))) ||
-      (tipeData === "denda" && data.denda === 1)
+      tipeData === "denda"
     );
   });
 
