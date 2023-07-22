@@ -29,7 +29,7 @@ function RiwayatPengembalian() {
       <SectionHeading title={"Dashboard Page"}></SectionHeading>
       <h2 className="text-2xl">Selamat Datang, {userData.nama}</h2>
       <div className=" mx-10 mt-10 mb-5 ">
-        <h2 className="text-2xl font-bold">List Buku</h2>
+        <h2 className="text-2xl font-bold">List Transaksi</h2>
       </div>
       <hr
         style={{

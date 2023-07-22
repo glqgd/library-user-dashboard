@@ -78,7 +78,7 @@ function DetailTransaksi() {
               </p>
               <p>
                 {" "}
-                <b>Deadline Pengembalian :</b>{" "}
+                <b>Tenggat Pengembalian :</b>{" "}
                 {new Date(transactionData.tenggat_kembali).toLocaleDateString(
                   "id-ID",
                   {
