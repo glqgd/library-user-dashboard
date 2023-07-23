@@ -9,6 +9,8 @@ function Dashboard() {
   const userData = JSON.parse(storedData);
   const [books, setBooks] = useState([]);
   const [booksData, setBooksData] = useState([]);
+  const [filteredBooks, setFilteredBooks] = useState([]); // New state for filtered data
+  const [currentPage, setCurrentPage] = useState(1);
 
   // Mengambil daftar buku dari backend
   const fetchBooks = async () => {
@@ -25,7 +27,8 @@ function Dashboard() {
 
   // Mencari buku berdasarkan query pencarian
   const searchBooks = (searchQuery) => {
-    setBooks(searchQuery);
+    setFilteredBooks(searchQuery); // Update the filteredBooks state with the search results
+    setCurrentPage(1); // Reset the currentPage when performing a search
   };
 
   useEffect(() => {
@@ -63,7 +66,11 @@ function Dashboard() {
 
         {/* Tabel untuk menampilkan daftar buku */}
         <div>
-          <AllBookTable books={books} />
+          <AllBookTable
+            books={filteredBooks.length > 0 ? filteredBooks : books}
+            currentPage={currentPage} // Pass the currentPage state to AllBookTable
+            setCurrentPage={setCurrentPage} // Pass the setCurrentPage function to AllBookTable
+          />
         </div>
       </div>
     </div>

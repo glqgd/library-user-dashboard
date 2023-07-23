@@ -1,9 +1,9 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Card, Label, TextInput, Button, Modal } from "flowbite-react";
 import { IoPersonCircle } from "react-icons/io5";
-import { MdOutlineCheckCircleOutline } from "react-icons/md";
+import { MdOutlineCheckCircleOutline, MdErrorOutline } from "react-icons/md";
 import Validation from "../Validation/LoginValidation";
 
 function DashboardUserLogin() {
@@ -26,6 +26,10 @@ function DashboardUserLogin() {
   const [modalProp, setmodalProp] = useState({});
   useEffect(() => {
     localStorage.removeItem("idTransaksi");
+    if (!localStorage.getItem("firstRender")) {
+      localStorage.setItem("firstRender", "true");
+      window.location.reload();
+    }
   }, []);
   // Fungsi untuk meng-handle perubahan nilai input
   const handleInput = (event) => {
@@ -62,7 +66,7 @@ function DashboardUserLogin() {
             const closeModal = document.getElementById("closeModal");
             setmodalProp({
               message: "Email atau Password Salah",
-              icon: "mx-auto mb-4 h-14 w-14 text-red-600",
+              icon: "error",
             });
             closeModal.addEventListener("click", function () {
               navigate("/");
@@ -84,7 +88,7 @@ function DashboardUserLogin() {
               const closeModal = document.getElementById("closeModal");
               setmodalProp({
                 message: "Login Success",
-                icon: "mx-auto mb-4 h-14 w-14 text-green-500",
+                icon: "success",
               });
               closeModal.addEventListener("click", function () {
                 navigate("/dashboard/book", { state: { username } });
@@ -95,7 +99,7 @@ function DashboardUserLogin() {
               const closeModal = document.getElementById("closeModal");
               setmodalProp({
                 message: "Email atau Password Salah",
-                icon: "mx-auto mb-4 h-14 w-14 text-red-600",
+                icon: "error",
               });
               closeModal.addEventListener("click", function () {
                 navigate("/");
@@ -110,7 +114,7 @@ function DashboardUserLogin() {
           const closeModal = document.getElementById("closeModal");
           setmodalProp({
             message: "Email atau Password Salah",
-            icon: "mx-auto mb-4 h-14 w-14 text-red-600",
+            icon: "error",
           });
           closeModal.addEventListener("click", function () {
             navigate("/");
@@ -127,7 +131,11 @@ function DashboardUserLogin() {
             <Modal.Header />
             <Modal.Body>
               <div className="text-center">
-                <MdOutlineCheckCircleOutline className={modalProp.icon} />
+                {modalProp.icon === "success" ? (
+                  <MdOutlineCheckCircleOutline className="mx-auto mb-4 h-14 w-14 text-green-500" />
+                ) : (
+                  <MdErrorOutline className="mx-auto mb-4 h-14 w-14 text-red-600" />
+                )}
                 {errors.email ? (
                   <h3 className="mb-5 text-lg font-normal text-red-600">
                     {errors.email}
@@ -211,7 +219,7 @@ function DashboardUserLogin() {
               <Button type="submit">Masuk</Button>
               <div className="text-center">
                 <span className="text-sm text-gray-500 dark:text-gray-400">
-                  Jika anda tidak memiliki akun silakan
+                  Jika anda tidak memiliki akun silahkan
                 </span>
                 <Link to="/dashboard-signup">
                   <span className="text-sm font-bold"> Daftar</span>

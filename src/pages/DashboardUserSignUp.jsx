@@ -264,7 +264,7 @@ function DashboardUserSignUp() {
 
               <div className="text-center">
                 <span className="text-sm text-gray-500 dark:text-gray-400">
-                  Jika anda sudah memiliki akun silakan
+                  Jika anda sudah memiliki akun silahkan
                 </span>
                 <Link to="/">
                   <span className="text-sm font-bold"> Masuk</span>

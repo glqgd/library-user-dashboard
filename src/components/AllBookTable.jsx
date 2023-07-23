@@ -2,8 +2,11 @@ import { Table, Pagination } from "flowbite-react";
 import React, { useState } from "react";
 import DetailButton from "./DetailButton";
 
-function AllBookTable({ books }) {
-  const [currentPage, setCurrentPage] = useState(1);
+function AllBookTable({ books, currentPage, setCurrentPage }) {
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const [perPage] = useState(10);
+
+  // const totalPages = Math.ceil(books.length / perPage);
   const [perPage] = useState(10);
 
   const totalPages = Math.ceil(books.length / perPage);
@@ -60,13 +63,14 @@ function AllBookTable({ books }) {
           <Pagination
             currentPage={currentPage}
             onPageChange={(page) => {
-              setCurrentPage(page);
+              setCurrentPage(page); // Update the currentPage state
             }}
             showIcons
             totalPages={totalPages}
           >
             {(page) => (
               <Pagination.Button
+                key={page}
                 active={page === currentPage}
                 style={{
                   backgroundColor: page === currentPage ? "blue" : "white",
