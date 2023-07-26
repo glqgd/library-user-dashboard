@@ -43,7 +43,7 @@ function Dashboard() {
   return (
     <div className="mx-5 my-5">
       {/* Judul halaman */}
-      <SectionHeading title={"Dashboard Page"}></SectionHeading>
+      <SectionHeading title={"Dashboard"}></SectionHeading>
 
       {/* Menampilkan nama pengguna */}
       <h2 className="text-2xl">Selamat Datang, {userData.nama}</h2>

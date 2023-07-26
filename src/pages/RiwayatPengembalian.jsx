@@ -26,7 +26,7 @@ function RiwayatPengembalian() {
 
   return (
     <div className="mx-5 my-5">
-      <SectionHeading title={"Dashboard Page"}></SectionHeading>
+      <SectionHeading title={"Riwayat Pengembalian"}></SectionHeading>
       <h2 className="text-2xl">Selamat Datang, {userData.nama}</h2>
       <div className=" mx-10 mt-10 mb-5 ">
         <h2 className="text-2xl font-bold">List Transaksi</h2>

@@ -29,7 +29,6 @@ function TransactionDataTable({ transactions, tipeData }) {
             <Table.HeadCell>ID Transaksi</Table.HeadCell>
             <Table.HeadCell>Tanggal Pinjam</Table.HeadCell>
             <Table.HeadCell>Tenggat Pengembalian</Table.HeadCell>
-            <Table.HeadCell>Tanggal Pengembalian</Table.HeadCell>
             <Table.HeadCell>Jumlah Buku Dipinjam</Table.HeadCell>
             <Table.HeadCell>Status</Table.HeadCell>
             <Table.HeadCell>Action</Table.HeadCell>
@@ -59,17 +58,6 @@ function TransactionDataTable({ transactions, tipeData }) {
                     </Table.Cell>
                     <Table.Cell>
                       {new Date(transaction.tenggat_kembali).toLocaleDateString(
-                        "id-ID",
-                        {
-                          weekday: "long",
-                          day: "numeric",
-                          month: "long",
-                          year: "numeric",
-                        }
-                      )}
-                    </Table.Cell>
-                    <Table.Cell>
-                      {new Date(transaction.tanggal_kembali).toLocaleDateString(
                         "id-ID",
                         {
                           weekday: "long",
