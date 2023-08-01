@@ -7,7 +7,7 @@ import BookDataTable from "../components/BookDataTable";
 function RiwayatDenda() {
   const storedData = localStorage.getItem("userData");
   const userData = JSON.parse(storedData);
-  const [transaction, setTransaction] = useState([]);
+  const [transaction, setTransaction] = useState([]); // State untuk menyimpan data transaksi
 
   const fetchTransaction = async () => {
     try {
@@ -97,6 +97,8 @@ function RiwayatDenda() {
 
   useEffect(() => {
     fetchTransaction();
+    // fetchBooks();
+    // console.log(books);
   }, []);
 
   return (
@@ -114,6 +116,18 @@ function RiwayatDenda() {
       <div>
         <TransactionDataTable transactions={transaction} tipeData={"denda"} />
       </div>
+
+      {/* <div className=" mx-10 mt-10 mb-5 ">
+        <h2 className="text-2xl font-bold">List Buku</h2>
+      </div>
+      <hr
+        style={{
+          border: "0.5px solid #e2dddd",
+        }}
+      /> */}
+      {/* <div>
+        <BookDataTable books={booksData} />
+      </div> */}
     </div>
   );
 }
