@@ -36,7 +36,9 @@ function LogOutButton() {
               Apakah anda yakin ingin Logout?
             </h3>
             <div className="flex justify-center gap-4">
-              <Button onClick={confirmLogout}>Logout</Button>
+              <Button color="failure" onClick={confirmLogout}>
+                Logout
+              </Button>
               <Button color="gray" onClick={() => setShowConfirmation(false)}>
                 Cancel
               </Button>
