@@ -14,7 +14,11 @@ function RiwayatPengembalian() {
       const response = await axios.get(
         `https://server.libraryselfservice.site/transaction`
       );
-      setTransaction(response.data);
+      const sortedBooks = response.data.sort(
+        (a, b) => b.id_transaksi - a.id_transaksi
+      );
+
+      setTransaction(sortedBooks);
     } catch (error) {
       console.error("Error fetching books:", error);
     }

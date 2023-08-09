@@ -3,10 +3,6 @@ import React, { useState } from "react";
 import DetailButton from "./DetailButton";
 
 function AllBookTable({ books, currentPage, setCurrentPage }) {
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const [perPage] = useState(10);
-
-  // const totalPages = Math.ceil(books.length / perPage);
   const [perPage] = useState(10);
 
   const totalPages = Math.ceil(books.length / perPage);

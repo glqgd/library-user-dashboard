@@ -18,8 +18,10 @@ function Dashboard() {
       const response = await axios.get(
         `https://server.libraryselfservice.site/books`
       );
-      setBooks(response.data);
-      setBooksData(response.data);
+
+      const sortedBooks = response.data.sort((a, b) => b.no_buku - a.no_buku);
+      setBooks(sortedBooks);
+      setBooksData(sortedBooks);
     } catch (error) {
       console.error("Error fetching books:", error);
     }

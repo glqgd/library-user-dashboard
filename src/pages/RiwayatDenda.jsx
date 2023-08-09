@@ -89,7 +89,12 @@ function RiwayatDenda() {
       const filteredTransactionData = transactionData.filter((item) => {
         return item.status === "Dipinjam";
       });
-      setTransaction(filteredTransactionData);
+
+      const sortedBooks = filteredTransactionData.sort(
+        (a, b) => b.id_transaksi - a.id_transaksi
+      );
+
+      setTransaction(sortedBooks);
     } catch (error) {
       console.error("Error fetching books:", error);
     }
