@@ -11,6 +11,9 @@ function Dashboard() {
   const [booksData, setBooksData] = useState([]);
   const [filteredBooks, setFilteredBooks] = useState([]); // New state for filtered data
   const [currentPage, setCurrentPage] = useState(1);
+  const [stokBuku, setStokBuku] = useState(0);
+  const [stokBukuTersedia, setStokBukuTersedia] = useState(0);
+  const [stokBukuTidakTersedia, setStokBukuTidakTersedia] = useState(0);
 
   // Mengambil daftar buku dari backend
   const fetchBooks = async () => {
@@ -19,7 +22,19 @@ function Dashboard() {
         `https://server.libraryselfservice.site/books`
       );
 
+      const bukuTersedia = response.data.filter((data) => {
+        return data.tersedia === 1;
+      });
+
+      const bukuTidakTersedia = response.data.filter((data) => {
+        return data.tersedia === 0;
+      });
+
       const sortedBooks = response.data.sort((a, b) => b.no_buku - a.no_buku);
+
+      setStokBuku(response.data.length);
+      setStokBukuTersedia(bukuTersedia.length);
+      setStokBukuTidakTersedia(bukuTidakTersedia.length);
       setBooks(sortedBooks);
       setBooksData(sortedBooks);
     } catch (error) {
@@ -61,9 +76,23 @@ function Dashboard() {
       />
 
       <div>
-        <div className="mx-5">
-          {/* Komponen SearchBar untuk mencari buku */}
-          <SearchBar data={booksData} onSearch={searchBooks} />
+        <div className="mx-5 grid grid-cols-5 gap-1 items-center">
+          <div>
+            <span className="font-bold">Stok Buku : </span>
+            <span>{stokBuku}</span>
+          </div>
+          <div>
+            <span className="font-bold">Stok Buku Tersedia : </span>
+            <span>{stokBukuTersedia}</span>
+          </div>
+          <div>
+            <span className="font-bold">Stok Buku Tidak Tersedia : </span>
+            <span>{stokBukuTidakTersedia}</span>
+          </div>
+
+          <div className="col-span-2">
+            <SearchBar data={booksData} onSearch={searchBooks} />
+          </div>
         </div>
 
         {/* Tabel untuk menampilkan daftar buku */}
