@@ -1,4 +1,4 @@
-import { Table, Pagination } from "flowbite-react";
+import { Table, Pagination, Badge } from "flowbite-react";
 import React, { useState } from "react";
 import DetailButton from "./DetailButton";
 
@@ -40,8 +40,25 @@ function AllBookTable({ books, currentPage, setCurrentPage }) {
 
                   <Table.Cell>{book.kode_rak}</Table.Cell>
                   <Table.Cell>
-                    {console.log(book.tersedia)}
-                    {book.tersedia === 1 ? "tersedia" : "tidak tersedia"}
+                    {book.tersedia === 1 ? (
+                      <div className="w-fit">
+                        <Badge
+                          color={"success"}
+                          size={"sm"}
+                          className="text-center"
+                        >
+                          Tersedia
+                        </Badge>
+                      </div>
+                    ) : (
+                      <Badge
+                        color={"failure"}
+                        size={"sm"}
+                        className="text-center"
+                      >
+                        Tidak Tersedia
+                      </Badge>
+                    )}
                   </Table.Cell>
                   <Table.Cell className="grid grid-cols-1 gap-1">
                     <DetailButton book={book}></DetailButton>

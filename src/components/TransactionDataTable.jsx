@@ -1,4 +1,4 @@
-import { Table, Pagination } from "flowbite-react";
+import { Table, Pagination, Badge } from "flowbite-react";
 import React, { useState } from "react";
 import TransactionDetailButton from "./TransactionDetailButton";
 
@@ -71,7 +71,29 @@ function TransactionDataTable({ transactions, tipeData }) {
                     <Table.Cell>
                       {transaction.kode_barcode.split(",").length}
                     </Table.Cell>
-                    <Table.Cell>{transaction.status}</Table.Cell>
+                    <Table.Cell>
+                      {transaction.status === "Selesai" ? (
+                        <div className="w-fit">
+                          <Badge
+                            color={"success"}
+                            size={"sm"}
+                            className="text-center"
+                          >
+                            {transaction.status}
+                          </Badge>
+                        </div>
+                      ) : (
+                        <div className="w-fit">
+                          <Badge
+                            color={"warning"}
+                            size={"sm"}
+                            className="text-center"
+                          >
+                            {transaction.status}
+                          </Badge>
+                        </div>
+                      )}
+                    </Table.Cell>
                     <Table.Cell className="grid grid-cols-1 gap-1">
                       <TransactionDetailButton transaction={transaction} />
                     </Table.Cell>
