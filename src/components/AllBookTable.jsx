@@ -16,7 +16,6 @@ function AllBookTable({ books, currentPage, setCurrentPage }) {
             <Table.HeadCell>Pengarang</Table.HeadCell>
             <Table.HeadCell>Penerbit</Table.HeadCell>
             <Table.HeadCell>Tahun Terbit</Table.HeadCell>
-            <Table.HeadCell>Kode Barcode</Table.HeadCell>
             <Table.HeadCell>Kode Rak</Table.HeadCell>
             <Table.HeadCell>Status</Table.HeadCell>
             <Table.HeadCell className="text-center">Action</Table.HeadCell>
@@ -38,10 +37,7 @@ function AllBookTable({ books, currentPage, setCurrentPage }) {
                   <Table.Cell>{book.pengarang}</Table.Cell>
                   <Table.Cell>{book.penerbit}</Table.Cell>
                   <Table.Cell>{book.tahun_terbit}</Table.Cell>
-                  <Table.Cell>
-                    {book.kode_barcode}
-                    {/* <Barcode value={book.kode_barcode} /> */}
-                  </Table.Cell>
+
                   <Table.Cell>{book.kode_rak}</Table.Cell>
                   <Table.Cell>
                     {console.log(book.tersedia)}
