@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import SectionHeading from "../components/SectionHeading";
 import BackButton from "../components/BackButton";
 import { useParams } from "react-router-dom";
-import { Label, TextInput } from "flowbite-react";
+import { Label, TextInput, Textarea } from "flowbite-react";
 import axios from "axios";
 
 function DetailBuku() {
@@ -98,6 +98,54 @@ function DetailBuku() {
                 disabled
                 color={"black"}
               />
+            </div>
+
+            <div>
+              <div className="block mb-2">
+                <Label htmlFor="isbn_issn" value="ISBN/ISSN" />
+              </div>
+              <TextInput
+                id="isbn_issn"
+                name="isbn_issn"
+                type="text"
+                value={bookData.isbn_issn}
+                shadow={true}
+                disabled
+                color={"black"}
+              />
+            </div>
+
+            <div>
+              <div className="block mb-2">
+                <Label htmlFor="jumlah_halaman" value="Jumlah Halaman" />
+              </div>
+              <TextInput
+                id="jumlah_halaman"
+                name="jumlah_halaman"
+                type="text"
+                value={bookData.jumlah_halaman}
+                shadow={true}
+                disabled
+                color={"black"}
+              />
+            </div>
+
+            <div>
+              <div className="block mb-2">
+                <Label htmlFor="deskripsi" value="Deskripsi" />
+              </div>
+              <div className="text-justify text-gray-400 border border-gray-400 p-3 rounded-md">
+                {bookData.deskripsi}
+              </div>
+              {/* <Textarea
+                id="deskripsi"
+                name="deskripsi"
+                type="text"
+                value={bookData.deskripsi}
+                shadow={true}
+                disabled
+                color={"black"}
+              /> */}
             </div>
 
             {/*  sumber */}

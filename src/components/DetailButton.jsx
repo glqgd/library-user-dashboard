@@ -6,8 +6,9 @@ function DetailButton({ book }) {
   const navigate = useNavigate();
 
   return (
-    <div className="flex justify-center items-center">
+    <div className="flex justify-center items-center w-full">
       <Button
+        className="w-full"
         size={"xs"}
         onClick={() => {
           navigate(`/dashboard/detail-buku/${book.kode_barcode}`);
