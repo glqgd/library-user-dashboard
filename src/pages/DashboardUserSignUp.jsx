@@ -1,4 +1,3 @@
-// Mengimpor modul dan komponen yang diperlukan
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -7,13 +6,15 @@ import { IoPersonCircle } from "react-icons/io5";
 import { MdOutlineCheckCircleOutline } from "react-icons/md";
 import Validation from "../Validation/SignUpValidation";
 
-function DashboardUserSignUp() {
+function SignUp() {
   // State untuk menyimpan nilai input pengguna
   const [values, setValues] = useState({
     name: "",
     email: "",
     password: "",
-    instansi: "",
+    prodi: "",
+    nim: "",
+    no_telp: "",
     tempat_lahir: "",
     tgl_lahir: "",
   });
@@ -49,7 +50,9 @@ function DashboardUserSignUp() {
       name: values.name.trim(),
       email: values.email.trim(),
       password: values.password.trim(),
-      instansi: values.instansi.trim(),
+      prodi: values.prodi.trim(),
+      nim: values.nim.trim(),
+      no_telp: values.no_telp.trim(),
       tempat_lahir: values.tempat_lahir.trim(),
       tgl_lahir: values.tgl_lahir.trim(),
     });
@@ -62,7 +65,9 @@ function DashboardUserSignUp() {
       err.name === "" &&
       err.email === "" &&
       err.password === "" &&
-      err.instansi === "" &&
+      err.prodi === "" &&
+      err.nim === "" &&
+      err.no_telp === "" &&
       err.tempat_lahir === "" &&
       err.tgl_lahir === ""
     ) {
@@ -196,21 +201,62 @@ function DashboardUserSignUp() {
 
               <div className="flex">
                 <div className="w-1/4">
-                  <Label htmlFor="instansi" value="Instansi" />
+                  <Label htmlFor="prodi" value="Program Studi" />
                 </div>
                 <div className="w-3/4">
                   <TextInput
                     type="text"
-                    id="instansi"
-                    placeholder="Masukkan Asal Instansi"
-                    name="instansi"
+                    id="prodi"
+                    placeholder="Masukkan Program Studi"
+                    name="prodi"
                     onChange={handleInput}
                     className="w-full "
                   />
-                  {errors.instansi && (
+                  {errors.prodi && (
                     <span className="text-red-600 text-xs">
                       {" "}
-                      {errors.instansi}
+                      {errors.prodi}
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              <div className="flex">
+                <div className="w-1/4">
+                  <Label htmlFor="nim" value="Nomor Induk Mahasiswa" />
+                </div>
+                <div className="w-3/4">
+                  <TextInput
+                    type="text"
+                    id="nim"
+                    placeholder="Masukkan Nomor Induk Mahasiswa"
+                    name="nim"
+                    onChange={handleInput}
+                    className="w-full "
+                  />
+                  {errors.nim && (
+                    <span className="text-red-600 text-xs"> {errors.nim}</span>
+                  )}
+                </div>
+              </div>
+
+              <div className="flex">
+                <div className="w-1/4">
+                  <Label htmlFor="no_telp" value="Nomor Telepon" />
+                </div>
+                <div className="w-3/4">
+                  <TextInput
+                    type="text"
+                    id="no_telp"
+                    placeholder="Masukkan Nomor Telepon"
+                    name="no_telp"
+                    onChange={handleInput}
+                    className="w-full "
+                  />
+                  {errors.no_telp && (
+                    <span className="text-red-600 text-xs">
+                      {" "}
+                      {errors.no_telp}
                     </span>
                   )}
                 </div>
@@ -278,4 +324,4 @@ function DashboardUserSignUp() {
   );
 }
 
-export default DashboardUserSignUp;
+export default SignUp;

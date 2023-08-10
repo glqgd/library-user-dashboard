@@ -24,10 +24,20 @@ function Validation(values) {
   } else {
     error.password = "";
   }
-  if (values.instansi === "") {
-    error.instansi = "Instansi tidak boleh kosong";
+  if (values.prodi === "") {
+    error.prodi = "Program Studi tidak boleh kosong";
   } else {
-    error.instansi = "";
+    error.prodi = "";
+  }
+  if (values.nim === "") {
+    error.nim = "NIM tidak boleh kosong";
+  } else {
+    error.nim = "";
+  }
+  if (values.no_telp === "") {
+    error.no_telp = "Nomor Telepon tidak boleh kosong";
+  } else {
+    error.no_telp = "";
   }
   if (values.tgl_lahir === "") {
     error.tgl_lahir = "Tanggal lahir tidak boleh kosong";
