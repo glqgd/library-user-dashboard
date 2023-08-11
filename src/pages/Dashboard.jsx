@@ -79,15 +79,15 @@ function Dashboard() {
         <div className="mx-5 grid grid-cols-5 gap-1 items-center">
           <div>
             <span className="font-bold">Stok Buku : </span>
-            <span>{stokBuku}</span>
+            <span className="font-bold">{stokBuku}</span>
           </div>
           <div>
             <span className="font-bold">Stok Buku Tersedia : </span>
-            <span>{stokBukuTersedia}</span>
+            <span className="font-bold">{stokBukuTersedia}</span>
           </div>
           <div>
             <span className="font-bold">Stok Buku Tidak Tersedia : </span>
-            <span>{stokBukuTidakTersedia}</span>
+            <span className="font-bold">{stokBukuTidakTersedia}</span>
           </div>
 
           <div className="col-span-2">

@@ -26,13 +26,19 @@ const SearchBar = ({ onSearch, data }) => {
       const kodeRakMatch = item.kode_rak
         .toLowerCase()
         .includes(searchQuery.toLowerCase());
+
+      const statusMatch =
+        (searchQuery.toLowerCase() === "tersedia" && item.tersedia === 1) ||
+        searchQuery.toLowerCase() === "tidak tersedia" ||
+        (searchQuery.toLowerCase() === "tidak" && item.tersedia === 0);
       return (
         judulMatch ||
         pengarangMatch ||
         penerbitMatch ||
         tahunTerbitMatch ||
         kodeBarcodeMatch ||
-        kodeRakMatch
+        kodeRakMatch ||
+        statusMatch
       );
     });
 
